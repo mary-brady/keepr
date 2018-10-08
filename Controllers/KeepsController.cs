@@ -26,7 +26,7 @@ namespace keepr.Controllers
         {
             if (ModelState.IsValid)
             {
-                keep = new Keep(keep.Title, keep.Description);
+                keep = new Keep(keep.Title, keep.Description, keep.KeepImg, keep.URL);
                 return _repo.Create(keep);
             }
             throw new Exception("Invalid keep!");

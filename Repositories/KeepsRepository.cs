@@ -21,7 +21,7 @@ namespace keepr.Repositories
         {
             int id = _db.ExecuteScalar<int>(@"
             INSERT INTO keeps (name, description)
-            VALUES (@Name, @Description);
+            VALUES (@Name, @Description, @KeepImg, @URL);
             SELECT LAST_INSERT_ID();", keep
             );
             keep.Id = id;
@@ -45,7 +45,7 @@ namespace keepr.Repositories
         {
             _db.Execute(@"
             UPDATE keep
-            SET name = @Name, description = @Description
+            SET name = @Name, description = @Description, keepimg = @KeepImg, url = @URL
             WHERE id = @Id
             ", keep);
             return keep;

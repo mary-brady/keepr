@@ -55,5 +55,14 @@ namespace keepr.Repositories
         {
             return _db.Execute("DELETE FROM vaults WHERE id = @Id", new { id });
         }
+
+        public IEnumerable<Vault> GetVaultsByUserId(string id)
+        {
+            return _db.Query<Vault>(@"
+            SELECT * FROM vaultkeeps
+            INNER JOIN keeps ON keeps.id = vaultkeeps.keepId
+            WHERE (vaultId = @id)
+            ", new { id });
+        }
     }
 }

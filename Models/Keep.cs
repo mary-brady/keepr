@@ -4,7 +4,6 @@ namespace keepr.Models
 {
     public class Keep
     {
-        [Required]
         public int Id { get; set; }
         [Required]
         [MinLength(4)]
@@ -13,12 +12,16 @@ namespace keepr.Models
         [Required]
         [MinLength(4)]
         public string Description { get; set; }
+        public string KeepImg { get; set; }
+        public string URL { get; set; }
 
         public Keep() { }
-        public Keep(string title, string description)
+        public Keep(string title, string description, string keepimg, string url)
         {
             Title = title;
             Description = description;
+            KeepImg = keepimg;
+            URL = url;
         }
 
     }
