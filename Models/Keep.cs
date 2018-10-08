@@ -7,21 +7,29 @@ namespace keepr.Models
         public int Id { get; set; }
         [Required]
         [MinLength(4)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [MinLength(4)]
         public string Description { get; set; }
-        public string KeepImg { get; set; }
-        public string URL { get; set; }
+        public string UserId { get; set; }
+        public bool IsPrivate { get; set; } = false;
+        public int Views { get; set; }
+        public int Shares { get; set; }
+        public int Keeps { get; set; }
+        public string Img { get; set; }
 
         public Keep() { }
-        public Keep(string title, string description, string keepimg, string url)
+        public Keep(string name, string description, string img, string userid, bool isprivate, int views, int shares, int keeps)
         {
-            Title = title;
+            Name = name;
             Description = description;
-            KeepImg = keepimg;
-            URL = url;
+            Img = img;
+            UserId = userid;
+            IsPrivate = isprivate;
+            Views = views;
+            Shares = shares;
+            Keeps = keeps;
         }
 
     }
