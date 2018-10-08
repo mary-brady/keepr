@@ -5,7 +5,7 @@ namespace keepr.Models
     public class Vault
     {
         [Required]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MinLength(4)]

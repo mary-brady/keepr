@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using keepr.Models;
 using Microsoft.AspNetCore.Mvc;
 using keepr.Repositories;
+using System;
 
 namespace keepr.Controllers
 {
@@ -10,7 +11,7 @@ namespace keepr.Controllers
     public class KeepsController : Controller
     {
         KeepsRepository _repo;
-        public KeepsController(KeepsController repo)
+        public KeepsController(KeepsRepository repo)
         {
             _repo = repo;
         }
@@ -28,6 +29,7 @@ namespace keepr.Controllers
                 keep = new Keep(keep.Title, keep.Description);
                 return _repo.Create(keep);
             }
+            throw new Exception("Invalid keep!");
         }
 
         [HttpPut]
