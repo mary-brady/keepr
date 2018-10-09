@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using Dapper;
 using keepr.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace keepr.Repositories
 {
@@ -16,12 +17,12 @@ namespace keepr.Repositories
 
         //CRUD via SQL
 
-        //CREATE VAULT
+        //CREATE KEEP
         public Keep Create(Keep keep)
         {
             int id = _db.ExecuteScalar<int>(@"
-            INSERT INTO keeps (name, description, img, url, userid, isprivate, views, shares, keeps)
-            VALUES (@Name, @Description, @Img, @URL, @UserID, @IsPrivate, @Views, @Shares, @Keeps);
+            INSERT INTO keeps (name, description, img, userid, isprivate, views, shares, keeps)
+            VALUES (@Name, @Description, @Img, @UserID, @IsPrivate, @Views, @Shares, @Keeps);
             SELECT LAST_INSERT_ID();", keep
             );
             keep.Id = id;
@@ -44,8 +45,8 @@ namespace keepr.Repositories
         public Keep Update(Keep keep)
         {
             _db.Execute(@"
-            UPDATE keep
-            SET name = @Name, description = @Description, img = @Img, userId = @UserId, isprivate = @IsPrivate, views = @Views, shares = @Shares, keeps = @keeps
+            UPDATE keeps
+            SET name = @Name, description = @Description, img = @Img, userid = @UserId, isprivate = @IsPrivate, views = @Views, shares = @Shares, keeps = @keeps
             WHERE id = @Id
             ", keep);
             return keep;

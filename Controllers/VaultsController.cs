@@ -26,6 +26,7 @@ namespace keepr.Controllers
         {
             if (ModelState.IsValid)
             {
+                vault.UserId = HttpContext.User.Identity.Name;
                 return _repo.Create(vault);
             }
             throw new Exception("Invalid keep!");
@@ -34,6 +35,7 @@ namespace keepr.Controllers
         [HttpPut]
         public Vault Put([FromBody]Vault vault)
         {
+            vault.UserId = HttpContext.User.Identity.Name;
             return _repo.Update(vault);
         }
 

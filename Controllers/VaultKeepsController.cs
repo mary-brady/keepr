@@ -26,6 +26,7 @@ namespace keepr.Controllers
         {
             if (ModelState.IsValid)
             {
+                vaultkeep.UserId = HttpContext.User.Identity.Name;
                 return _repo.Create(vaultkeep);
             }
             throw new Exception("Invalid keep!");
