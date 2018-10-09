@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home container-fluid">
     <h1>Welcome Home</h1>
     <button @click="logout()">Logout</button>
   </div>

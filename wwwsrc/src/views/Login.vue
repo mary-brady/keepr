@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login container-fluid">
         <form v-if="loginForm" @submit.prevent="loginUser">
             <input type="email" v-model="creds.email" placeholder="email">
             <input type="password" v-model="creds.password" placeholder="password">
@@ -19,33 +19,33 @@
 </template>
 
 <script>
-    export default {
-        name: "login",
-        mounted() {
-            //checks for valid session
-            this.$store.dispatch("authenticate");
-        },
-        data() {
-            return {
-                loginForm: true,
-                creds: {
-                    email: "",
-                    password: ""
-                },
-                newUser: {
-                    email: "",
-                    password: "",
-                    username: ""
-                }
-            };
-        },
-        methods: {
-            register() {
-                this.$store.dispatch("register", this.newUser);
-            },
-            loginUser() {
-                this.$store.dispatch("login", this.creds);
-            }
-        }
+export default {
+  name: "login",
+  mounted() {
+    //checks for valid session
+    this.$store.dispatch("authenticate");
+  },
+  data() {
+    return {
+      loginForm: true,
+      creds: {
+        email: "",
+        password: ""
+      },
+      newUser: {
+        email: "",
+        password: "",
+        username: ""
+      }
     };
+  },
+  methods: {
+    register() {
+      this.$store.dispatch("register", this.newUser);
+    },
+    loginUser() {
+      this.$store.dispatch("login", this.creds);
+    }
+  }
+};
 </script>
