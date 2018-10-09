@@ -20,17 +20,6 @@ namespace keepr.Models
         public string Img { get; set; }
 
         public Keep() { }
-        public Keep(string name, string description, string img, string userid, bool isprivate, int views, int shares, int keeps)
-        {
-            Name = name;
-            Description = description;
-            Img = img;
-            UserId = userid;
-            IsPrivate = isprivate;
-            Views = views;
-            Shares = shares;
-            Keeps = keeps;
-        }
 
     }
 }

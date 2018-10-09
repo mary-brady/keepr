@@ -8,17 +8,13 @@ namespace keepr.Models
 
         [Required]
         [MinLength(4)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [MinLength(4)]
         public string Description { get; set; }
+        public string UserId { get; set; }
 
         public Vault() { }
-        public Vault(string title, string description)
-        {
-            Title = title;
-            Description = description;
-        }
     }
 }

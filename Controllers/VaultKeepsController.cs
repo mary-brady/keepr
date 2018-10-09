@@ -8,33 +8,33 @@ namespace keepr.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VaultsController : Controller
+    public class VaultKeepsController : Controller
     {
-        VaultsRepository _repo;
-        public VaultsController(VaultsRepository repo)
+        VaultKeepRepository _repo;
+        public VaultKeepsController(VaultKeepRepository repo)
         {
             _repo = repo;
         }
         [HttpGet]
-        public IEnumerable<Vault> Get()
+        public IEnumerable<VaultKeep> Get()
         {
             return _repo.GetAll();
         }
 
         [HttpPost]
-        public Vault Post([FromBody] Vault vault)
+        public VaultKeep Post([FromBody]VaultKeep vaultkeep)
         {
             if (ModelState.IsValid)
             {
-                return _repo.Create(vault);
+                return _repo.Create(vaultkeep);
             }
             throw new Exception("Invalid keep!");
         }
 
         [HttpPut]
-        public Vault Put([FromBody]Vault vault)
+        public VaultKeep Put([FromBody]VaultKeep vaultkeep)
         {
-            return _repo.Update(vault);
+            return _repo.Update(vaultkeep);
         }
 
         [HttpDelete("{id}")]
