@@ -85,11 +85,37 @@ export default new Vuex.Store({
           commit("setKeeps", keeps.data)
         })
     },
+    addKeep({ dispatch }, keepData) {
+      api.post('keeps', keepData.keepData)
+        .then(keeps => {
+          dispatch("getKeeps")
+        })
+    },
+    deleteKeep({ dispatch }, keepData) {
+      debugger
+      api.delete('keeps/' + keepData.id)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+    //Vaults Stuff
     getVaults({ commit }) {
       api.get('vaults')
         .then(vaults => {
           console.log('Vaults: ', vaults.data)
           commit("setVaults", vaults.data)
+        })
+    },
+    addVault({ dispatch }, vaultData) {
+      api.post('vaults', vaultData.vaultData)
+        .then(vaults => {
+          dispatch("getVaults")
+        })
+    },
+    deleteVault({ dispatch }, vaultData) {
+      api.delete('vaults/' + vaultData.id)
+        .then(res => {
+          dispatch('getVaults')
         })
     }
   }

@@ -4,23 +4,19 @@
 <div class="modal">
     <header class="modal-header">
         <slot class="header">
-            <h2>Add Keep</h2> &nbsp; &nbsp;
+            <h2>Add Vault</h2> &nbsp; &nbsp;
             <span class="clickable"><i class="fas fa-times icon" @click="close"></i></span>
         </slot>
         </header>
         <div class="modal-body">
         <slot class="body">
             <div class="mw">
-             <form @submit.prevent="addKeep">
+             <form @submit.prevent="addVault">
                 <div class="form-group">
-                <input type="text" class="form-control mt-1 mb-1" v-model="newKeep.name" placeholder="Name it!"/>
-                  <input type="text" class="form-control mt-1 mb-1" v-model="newKeep.description" placeholder="Describe it!"/>
-                  <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input">
-                   Keep it private?
-                   </label>
+                <input type="text" class="form-control mt-1 mb-1" v-model="newVault.name" placeholder="Name it!"/>
+                  <input type="text" class="form-control mt-1 mb-1" v-model="newVault.description" placeholder="Describe it!"/>
                    <br>
-                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="close">Add Keep</button>
+                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="close">Create Vault</button>
                </div>
             </form>
             </div>
@@ -33,28 +29,26 @@
 </template>
 <script>
 export default {
-  name: "UploadModal",
+  name: "VaultModal",
   mounted() {
     //checks for valid session
     this.$store.dispatch("authenticate");
   },
   data() {
     return {
-      newKeep: {
+      newVault: {
         name: "",
-        description: "",
-        isPrivate: false,
-        img: ""
+        description: ""
       }
     };
   },
   methods: {
-    addKeep() {
-      this.$store.dispatch("addKeep", {
+    addVault() {
+      this.$store.dispatch("addVault", {
         userId: this.userId,
-        keepData: this.newKeep
+        vaultData: this.newVault
       });
-      this.newKeep = { name: "", description: "", isPrivate: false, img: "" };
+      this.newVault = { name: "", description: "" };
     },
     close() {
       this.$emit("close");

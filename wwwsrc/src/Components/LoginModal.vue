@@ -4,35 +4,35 @@
 <div class="modal">
     <header class="modal-header">
         <slot class="header">
-            <h2>Login</h2> &nbsp; &nbsp;
+            <h2>Login or Register</h2> &nbsp; &nbsp;
             <span class="clickable"><i class="fas fa-times icon" @click="close"></i></span>
         </slot>
         </header>
         <div class="modal-body">
         <slot class="body">
             <div class="mw">
-             <form @submit.prevent="loginUser">
-               <div class="form-group">
-                 <input type="text" class="form-control mt-1 mb-1" v-model="creds.email" placeholder="Email"/>
+             <form v-if="registerForm" @submit.prevent="loginUser">
+                <div class="form-group">
+                <input type="text" class="form-control mt-1 mb-1" v-model="creds.email" placeholder="Email"/>
                   <input type="password" class="form-control mt-1 mb-1" v-model="creds.password" placeholder="Password"/>
                   <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="close">Login</button>
                </div>
             </form>
-            <form @submit.prevent="register">
-    <header class="modal-header">
-                <slot class="header">
-                <h2>Register</h2>
-                </slot>
-                </header>
+            <form v-else @submit.prevent="register">
                 <div class="form-group">
-            <input type="text" class="form-control mt-1 mb-1" v-model="newUser.username" placeholder="Username">
-            <input type="email" class="form-control mt-1 mb-1" v-model="newUser.email" placeholder="Email">
-            <input type="password" class="form-control mt-1 mb-1" v-model="newUser.password" placeholder="Password">
-            <button class="btn btn-primary mt-2" type="submit">Create Account</button>
-            </div>
+                    <input type="text" class="form-control mt-1 mb-1" v-model="newUser.username" placeholder="Username">
+                    <input type="email" class="form-control mt-1 mb-1" v-model="newUser.email" placeholder="Email">
+                    <input type="password" class="form-control mt-1 mb-1" v-model="newUser.password" placeholder="Password">
+                    <button class="btn btn-primary mt-2" type="submit">Create Account</button>
+                </div>
         </form>
             </div>
         </slot>
+        <div @click="registerForm = !registerForm">
+            &nbsp;
+            <p v-if="registerForm" class="clickable">No account? Click to Register!</p>
+            <p v-else class="clickable">Already have an account?</p>
+        </div>
         </div>
     </div>
 
@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      loginForm: true,
+      registerForm: true,
       creds: {
         email: "",
         password: ""
@@ -92,11 +92,10 @@ export default {
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  /* max-width: 40%; */
 }
 .modal-header,
 .modal-footer {
-  padding: 5px;
+  padding: 15px;
   display: flex;
   padding-bottom: 2px;
 }
@@ -128,5 +127,9 @@ export default {
 }
 .icon {
   color: #555;
+}
+p {
+  color: #158cba;
+  font-size: small;
 }
 </style>
