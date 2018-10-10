@@ -11,8 +11,8 @@
         <router-link to="/login">Login</router-link>
       </li>
       <li class="nav-item">
-        <button class="btn btn-secondary" @click="showModal()">Login</button>
-        <modal v-show="isModalVisible" @close="closeModal()"> </modal>
+        <button class="btn btn-secondary" @click="showModal">Login</button>
+        <LoginModal v-show="isModalVisible" @close="closeModal"></LoginModal>
       </li>
       <li class="nav-item">
       </li> &nbsp;&nbsp;
@@ -25,9 +25,12 @@
 </template>
 
 <script>
-import register from "@/Components/LoginModal.vue";
+import LoginModal from "@/Components/LoginModal.vue";
 
 export default {
+  components: {
+    LoginModal
+  },
   data() {
     return {
       isModalVisible: false
@@ -43,9 +46,6 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     }
-  },
-  components: {
-    LoginModal
   }
 };
 </script>
