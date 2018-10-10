@@ -1,13 +1,19 @@
 <template>
   <div class="home container-fluid">
     <h1>Welcome Home</h1>
-    <button @click="logout()">Logout</button>
+    <Keeps />
+    
   </div>
 </template>
 
 <script>
+import Keeps from "@/components/Keeps.vue";
 export default {
   name: "home",
+  components: {
+    Keeps,
+    Dashboard
+  },
   mounted() {
     //blocks users not logged in
     if (!this.$store.state.user.id) {
@@ -15,10 +21,6 @@ export default {
     }
   },
   mutations: {},
-  methods: {
-    logout() {
-      this.$store.dispatch("logout");
-    }
-  }
+  methods: {}
 };
 </script>
