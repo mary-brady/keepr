@@ -1,21 +1,22 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">Keepa!</a>
+  <a class="navbar-brand" href="#"><strong>Keepa!</strong></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <router-link to="/home">Home</router-link>
+        <router-link to="/login">Login</router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/dashboard">Dashboard</router-link>
+        <button class="btn btn-secondary" @click="showModal()">Login</button>
+        <modal v-show="isModalVisible" @close="closeModal()"> </modal>
       </li>
       <li class="nav-item">
-      </li>
-    <button class="btn btn-outline-info btn-sm" @click="logout()">Logout</button>
+      </li> &nbsp;&nbsp;
+    <span class="clickable" @click="logout()"><i class="fas fa-sign-out-alt"></i></span>
     </ul>
   </div>
 </nav>
@@ -24,11 +25,27 @@
 </template>
 
 <script>
+import register from "@/Components/LoginModal.vue";
+
 export default {
+  data() {
+    return {
+      isModalVisible: false
+    };
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
     }
+  },
+  components: {
+    LoginModal
   }
 };
 </script>
@@ -54,5 +71,13 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+.clickable {
+  font-size: x-large;
+  color: #f6f6f6;
 }
 </style>

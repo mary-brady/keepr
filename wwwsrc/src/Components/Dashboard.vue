@@ -1,17 +1,7 @@
 <template>
     <div id="dashboard" class="container-fluid">
       <h1>Dashboard</h1>
-      <p>This is where you will see your vaults</p>
-      <div v-for="vault in vaults" :key="vault._id" class="col-md-3">
-        <div class="card">
-          <div class="card-header">
-            <h3>{{vault.name}}</h3>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle text-muted">{{vault.description}}</h6>
-        </div>
-        </div>
-      </div>
+      <p>This is your dashbuuuurd</p>
     </div>
 </template>
 <script>
