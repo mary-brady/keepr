@@ -14,8 +14,6 @@
         <router-link to="/dashboard">Dashboard</router-link>
       </li>
       <li class="nav-item">
-        <a href="#">Keeps</a>
-        <Keeps />
       </li>
     <button class="btn btn-outline-info btn-sm" @click="logout()">Logout</button>
     </ul>

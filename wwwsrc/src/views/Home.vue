@@ -2,12 +2,15 @@
   <div class="home container-fluid">
     <h1>Welcome Home</h1>
     <Keeps />
+    <Dashboard />
     
   </div>
 </template>
 
 <script>
-import Keeps from "@/components/Keeps.vue";
+import Keeps from "@/Components/Keeps.vue";
+import Dashboard from "@/Components/Dashboard.vue";
+
 export default {
   name: "home",
   components: {
