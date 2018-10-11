@@ -1,7 +1,11 @@
 <template>
     <div id="vaults" class="container-fluid">
         <div class="row">
+          <div class="col-12">
+            <hr />
       <h1>Your Vaults</h1>
+      <hr />
+      </div>
         </div>
         <div class="row">
       <div v-for="vault in vaults" :key="vault.id" class="col-md-4">
