@@ -22,6 +22,7 @@ export default new Vuex.Store({
     user: {},
     keeps: {},
     vaults: {},
+    vaultKeeps: {}
 
   },
   mutations: {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     },
     setVaults(state, vaults) {
       state.vaults = vaults
+    },
+    setVaultKeeps(state, vaultKeeps) {
+      state.vaults = vaultKeeps
     }
   },
   actions: {
@@ -51,7 +55,7 @@ export default new Vuex.Store({
           console.log('[registration failed] :', e)
         })
     },
-    authenticate({ commit, dispatch }) {
+    authenticate({ commit }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
@@ -92,7 +96,6 @@ export default new Vuex.Store({
         })
     },
     deleteKeep({ dispatch }, keepData) {
-      debugger
       api.delete('keeps/' + keepData.id)
         .then(res => {
           dispatch('getKeeps')
@@ -116,6 +119,25 @@ export default new Vuex.Store({
       api.delete('vaults/' + vaultData.id)
         .then(res => {
           dispatch('getVaults')
+        })
+    },
+    getVaultKeeps({ commit }) {
+      api.get('vaultkeeps')
+        .then(vk => {
+          console.log('vk: ', vk.data)
+          commit("setVaultKeeps", vk.data)
+        })
+    },
+    moveVK({ dispatch }, vk) {
+      api.put('vaultkeeps/' + vk.id)
+        .then(res => {
+          dispatch("setVaultKeeps", res.data)
+        })
+    },
+    removeVK({ dispatch }, vk) {
+      api.delete('vaultkeeps/' + vk.id)
+        .then(res => {
+          dispatch("setVaultKeeps", res.data)
         })
     }
   }

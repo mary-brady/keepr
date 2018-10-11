@@ -5,6 +5,7 @@
     </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep._id" class="col-md-4">
+        <p v-if="!keep.userId == user.id">You don't have any keeps!</p>
             <div class="card">
                 <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
             <div class="card-body">
@@ -13,9 +14,9 @@
             </div>
             </div>
         </div>
+            
+        </div>
     </div>
-</div>
-    
 </template>
 <script>
 export default {
@@ -27,16 +28,15 @@ export default {
     keeps() {
       return this.$store.state.keeps;
     },
-    users() {
+    user() {
       return this.$store.state.user;
     }
   },
   methods: {
     deleteKeep(keep) {
-      debugger;
-      if (keep.userId == this.userId) {
+      if (keep.userId == this.user.id) {
+        this.$store.dispatch("deleteKeep", keep);
       }
-      this.$store.dispatch("deleteKeep");
     }
   }
 };

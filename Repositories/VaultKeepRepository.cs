@@ -45,7 +45,7 @@ namespace keepr.Repositories
         {
             _db.Execute(@"
             UPDATE vaultkeep
-            SET name = @Name, description = @Description
+            SET vaultid = @VaultId, keepid = @KeepId, userid = @UserId
             WHERE id = @Id
             ", vaultkeep);
             return vaultkeep;
