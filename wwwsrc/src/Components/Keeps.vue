@@ -29,6 +29,7 @@ export default {
       return this.$store.state.keeps;
     },
     user() {
+      console.log("user: ", this.$store.state.user);
       return this.$store.state.user;
     }
   },

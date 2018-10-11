@@ -1,10 +1,18 @@
 <template>
-    
+<div id="vaultkeeps">
+    <div class="header">
+        <h1>Vault Name Here...</h1>
+        {{vaultKeeps}}
+    </div>
+</div>
 </template>
 <script>
 export default {
   name: "vaultkeeps",
-  mounted: {
+  mounted() {
+    return this.$store.dispatch("getVaultKeeps");
+  },
+  computed: {
     vaultKeeps() {
       return this.$store.state.vaultKeeps;
     },

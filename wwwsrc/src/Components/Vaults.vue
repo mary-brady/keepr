@@ -1,10 +1,10 @@
 <template>
-    <div id="Vaults" class="container-fluid">
+    <div id="vaults" class="container-fluid">
         <div class="row">
       <h1>Your Vaults</h1>
         </div>
         <div class="row">
-      <div v-for="vault in vaults" :key="vault._id" class="col-md-3">
+      <div v-for="vault in vaults" :key="vault.id" class="col-md-4">
         <p v-if="!vault.userId == user.id">You don't have any vaults!<p>
         <div class="card">
           <div class="card-header">

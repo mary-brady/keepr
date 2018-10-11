@@ -45,7 +45,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    register({ commit, dispatch }, newUser) {
+    register({ commit }, newUser) {
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)

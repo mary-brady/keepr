@@ -29,11 +29,11 @@ export default {
   mounted() {
     this.$store.dispatch("getVaults");
   },
-  computed: {
-    vaults() {
-      return this.$store.state.vaults;
-    }
-  },
+  // computed: {
+  //   vaults() {
+  //     return this.$store.state.vaults;
+  //   }
+  // },
   methods: {
     showKeepModal() {
       this.isUploadModalVisible = true;
