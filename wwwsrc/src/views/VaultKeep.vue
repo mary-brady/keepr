@@ -1,9 +1,10 @@
 <template>
     <div class="vaultkeep container-fluid">
         <div class="row">
-                <h1 class="font">{{vaults.name}}</h1>
-                <h4 class="font">{{vaults.description}}</h4>
-            <div class="col-md-3" v-for="vk in vaultkeeps" :key="vk.id">
+            <h1>Hello?</h1>
+                <h1 class="font">{{id.name}}</h1>
+                <h4 class="font">{{id.description}}</h4>
+            <div class="col-md-3" v-for="keep in keeps" :key="keep.id">
                  <p v-if="!keep.userId == user.id">You don't have anything in here!</p>
             <div class="card">
                 <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
@@ -20,7 +21,7 @@
 export default {
   name: "vaultkeeps",
   mounted() {
-    this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaultKeeps", vault);
   },
   computed: {
     user() {

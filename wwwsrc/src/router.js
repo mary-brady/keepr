@@ -22,9 +22,10 @@ export default new Router({
       component: Login
     },
     {
-      path: '/vaultkeep',
+      path: '/vaultkeep/:id',
       name: 'vaultkeep',
-      component: VaultKeep
+      component: VaultKeep,
+      props: true
     }
   ]
 })
