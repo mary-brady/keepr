@@ -28,10 +28,13 @@ namespace keepr.Repositories
             return vaultkeep;
         }
 
-        //GET ALL VAULTS
-        public IEnumerable<VaultKeep> GetAll()
+        //GET ALL VAULTSs
+        public IEnumerable<Keep> GetAll(int vaultId)
         {
-            return _db.Query<VaultKeep>("SELECT * FROM vaultkeeps;");
+            return _db.Query<Keep>(@"
+            SELECT * FROM vaultkeeps vk
+            INNER JOIN keeps k ON k.id = vk.keepId 
+            WHERE (vaultId = @vaultId) ", new { vaultId });
         }
 
         //GET VAULT BY ID

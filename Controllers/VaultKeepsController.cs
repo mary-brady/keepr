@@ -15,10 +15,10 @@ namespace keepr.Controllers
         {
             _repo = repo;
         }
-        [HttpGet]
-        public IEnumerable<VaultKeep> Get()
+        [HttpGet("{vaultId}")]
+        public IEnumerable<Keep> Get(int vaultId)
         {
-            return _repo.GetAll();
+            return _repo.GetAll(vaultId);
         }
 
         [HttpPost]
