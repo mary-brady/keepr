@@ -2,10 +2,8 @@
     <div class="vaultkeep container-fluid">
         <div class="row">
             <h1>Hello?</h1>
-                <h1 class="font">{{id.name}}</h1>
-                <h4 class="font">{{id.description}}</h4>
-            <div class="col-md-3" v-for="keep in keeps" :key="keep.id">
-                 <p v-if="!keep.userId == user.id">You don't have anything in here!</p>
+            <div class="col-md-3" v-for="keep in keepList" :key="keep.id">
+                 <p v-if="keep.length = 0">You don't have anything in here!</p>
             <div class="card">
                 <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
             <div class="card-body">
@@ -18,20 +16,19 @@
             </div>
 </template>
 <script>
+import Keeps from "@/Components/Keeps.vue";
+
 export default {
   name: "vaultkeeps",
+  props: ["vaultId"],
+
   mounted() {
-    this.$store.dispatch("getVaultKeeps", vault);
+    let vaultId = this.$route.params.vaultId;
+    this.$store.dispatch("getVaultKeeps", this.vaultId);
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    keeps() {
-      return this.$store.state.keeps;
-    },
-    vaults() {
-      return this.$store.state.vaults;
+    keepList() {
+      return this.$store.state.vaultKeeps[this.vaultId];
     }
   }
 };

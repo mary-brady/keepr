@@ -8,7 +8,7 @@
         <p v-if="!vault.userId == user.id">You don't have any vaults!<p>
         <div class="card">
           <div class="card-header">
-            <h4><router-link :to="`/vaultkeeps/${vault.id}`">{{vault.name}}</router-link> | <span class="clickable" @click="deleteVault(vault)"><i class="far fa-trash-alt"></i></span></h4>
+            <h4><router-link :to="{name: 'vaultkeep', params: {vaultId: vault.id}}">{{vault.name}}</router-link> | <span class="clickable" @click="deleteVault(vault)"><i class="far fa-trash-alt"></i></span></h4>
           </div>
           <div class="card-body">
             <h6 class="card-subtitle text-muted">{{vault.description}}</h6>
