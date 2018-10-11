@@ -8,7 +8,7 @@
         <p v-if="!vault.userId == user.id">You don't have any vaults!<p>
         <div class="card">
           <div class="card-header">
-            <h3>{{vault.name}} | <span class="clickable" @click="deleteVault(vault)"><i class="far fa-trash-alt"></i></span></h3>
+            <router-link :to="{name: 'vaultkeep', query: {vaultId: vault.id}}">{{vault.name}} | <span class="clickable" @click="deleteVault(vault)"><i class="far fa-trash-alt"></i></span></router-link>
           </div>
           <div class="card-body">
             <h6 class="card-subtitle text-muted">{{vault.description}}</h6>
@@ -19,8 +19,13 @@
       </div>
 </template>
 <script>
+import VaultKeep from "@/views/VaultKeep.vue";
+
 export default {
   name: "vaults",
+  components: {
+    VaultKeep
+  },
   mounted() {
     this.$store.dispatch("getVaults");
   },

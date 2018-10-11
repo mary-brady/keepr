@@ -5,8 +5,6 @@
     <Keeps />
     <br>
     <Vaults />
-    <br>
-    <VaultKeeps />
     
   </div>
 </template>
@@ -15,15 +13,13 @@
 import Keeps from "@/Components/Keeps.vue";
 import Dashboard from "@/Components/Dashboard.vue";
 import Vaults from "@/Components/Vaults.vue";
-import VaultKeeps from "@/Components/VaultKeeps.vue";
 
 export default {
   name: "home",
   components: {
     Keeps,
     Vaults,
-    Dashboard,
-    VaultKeeps
+    Dashboard
   },
   mounted() {
     //blocks users not logged in
