@@ -1,8 +1,17 @@
 <template>
     <div class="vaultkeep container-fluid">
         <div class="row">
-            <h1>Hello?</h1>
-            <div class="col-md-3" v-for="keep in keepList" :key="keep.id">
+            <div class="col-12">
+            <h1>{{activeVault.name}}!!!!!</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+            <h6 class="text-muted">{{activeVault.description}}</h6>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-md-4" v-for="keep in keepList" :key="keep.id">
                  <p v-if="keep.length = 0">You don't have anything in here!</p>
             <div class="card">
                 <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
@@ -24,14 +33,21 @@ export default {
 
   mounted() {
     let vaultId = this.$route.params.vaultId;
-    this.$store.dispatch("getVaultKeeps", this.vaultId);
+    this.$store.dispatch("activeVault", this.vaultId);
   },
   computed: {
     keepList() {
-      return this.$store.state.vaultKeeps[this.vaultId];
+      return this.$store.state.vaultKeeps;
+    },
+    activeVault() {
+      return this.$store.state.activeVault;
     }
   }
 };
 </script>
 <style scoped>
+i {
+  color: #555;
+  font-size: large;
+}
 </style>
