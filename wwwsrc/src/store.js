@@ -23,7 +23,8 @@ export default new Vuex.Store({
     keeps: [],
     vaults: [],
     activeVault: {},
-    vaultKeeps: []
+    vaultKeeps: [],
+    activeKeep: {}
 
   },
   mutations: {
@@ -47,6 +48,10 @@ export default new Vuex.Store({
     setActiveVault(state, vaultId) {
       state.activeVault = state.vaults.find(vault => vault.id == vaultId)
       console.log('activeVault = ', state.activeVault)
+    },
+    setActiveKeep(state, keepId) {
+      state.activeKeep = state.keeps.find(keep => keep.id == keepId)
+      console.log('active Keep = ', state.activeKeep)
     }
   },
   actions: {
@@ -105,33 +110,15 @@ export default new Vuex.Store({
           dispatch('getKeeps')
         })
     },
-    updateKeepName({ dispatch }, keepData) {
-      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description })
+    updateKeep({ dispatch }, keepData) {
+      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description, Img: keepData.img, isPrivate: keepData.isPrivate })
         .then(res => {
           console.log(res)
           dispatch('getKeeps')
         })
     },
-    updateKeepDesc({ dispatch }, keepData) {
-      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description })
-        .then(res => {
-          console.log(res)
-          dispatch('getKeeps')
-        })
-    },
-    updateKeepImg({ dispatch }, keepData) {
-      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description, Img: keepData.Img })
-        .then(res => {
-          console.log(res)
-          dispatch('getKeeps')
-        })
-    },
-    updateKeepPrivate({ dispatch }, keepData) {
-      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description, IsPrivate: keepData.IsPrivate })
-        .then(res => {
-          console.log(res)
-          dispatch('getKeeps')
-        })
+    activeKeep({ commit, dispatch }, keepId) {
+      commit('setActiveKeep', keepId)
     },
     //Vaults Stuff
     getVaults({ commit }) {

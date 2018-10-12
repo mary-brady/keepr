@@ -11,13 +11,43 @@
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
         <p v-if="!keep.userId == user.id">You don't have any keeps!</p>
             <div class="card">
-                <h3 class="card-header">{{keep.name}} 
+                <h3 class="card-header" @click="seeKeep(keep.id)">{{keep.name}} 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
                   <span class="clickable" @click="showModal"><i
                   class="fas fa-ellipsis-h"></i></span>
                 </h3>
 
-<!-- MODAL STUFF -->
+<!-- KEEP MODAL STUFF -->
+<div v-show="seeKeepModal">
+<transition name="modal-fade">
+  <div class="modal-backdrop">
+    <div class="modal">
+    <header class="modal-header">
+        <slot class="header">
+            <h2>{{keep.name}}</h2> &nbsp; &nbsp;
+            <span class="clickable"><i class="fas fa-times icon" @click="closeModal"></i></span>
+        </slot>
+        </header>
+        <div class="modal-body">
+        <slot class="body">
+            <div class="mw">
+             <p>{{keep.description}}</p>
+                <p>Private? {{keep.isPrivate}}</p>
+                <select class="custom-select" v-model="vault">
+                  <option v-for="vault in vaults" :key="vault.id" :value="vault">{{vault.name}}</option>
+                  </select>
+                <button @click="addToVault(keep)">Add To Vault</button>
+                <button class="btn btn-primary" @click="closeKeep">Done</button>
+            </div>
+        </slot>
+        </div>
+    </div>
+</div>
+</transition>
+</div>
+<!-- KEEP MODAL STUFF -->
+
+<!-- EDIT MODAL STUFF -->
 <div v-show="editKeepModalVisible">
 <transition name="modal-fade">
   <div class="modal-backdrop">
@@ -31,14 +61,14 @@
         <div class="modal-body">
         <slot class="body">
             <div class="mw">
-             <form @submit.prevent="editKeep">
+             <form @submit.prevent="editKeep(keep)">
                 <div class="form-group">
-                <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.name" placeholder="New Name?"/>
+                <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.name" placeholder="Keep Name"/>
                   <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.description" placeholder="Describe it!"/>
                    <br>
                   <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.isPrivate" placeholder="Describe it!"/>
                   <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.img" placeholder="Image URL?"/>
-                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="keepUpdate(keep)">Save Changes</button>
+                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="closeModal">Save Changes</button>
                </div>
             </form>
             </div>
@@ -48,7 +78,7 @@
 </div>
 </transition>
 </div>
-<!-- MODAL STUFF -->
+<!-- EDIT MODAL STUFF -->
 
             <div class="card-body">
                 <p>{{keep.description}}</p>
@@ -79,7 +109,8 @@ export default {
         img: "",
         isPrivate: false
       },
-      editKeepModalVisible: false
+      editKeepModalVisible: false,
+      seeKeepModal: false
     };
   },
   mounted() {
@@ -103,20 +134,27 @@ export default {
     closeModal() {
       this.editKeepModalVisible = false;
     },
+    seeKeep() {
+      this.seeKeepModal = true;
+    },
+    closeKeep() {
+      this.seeKeepModal = false;
+    },
     deleteKeep(keep) {
       if (keep.userId == this.user.id) {
         this.$store.dispatch("deleteKeep", keep);
       }
     },
     addToVault(keep) {
-      keep.keeps++;
+      keeps = keep.keeps++;
       this.$store.dispatch("addToVault", {
         KeepId: keep.id,
-        VaultId: this.vault.id
+        VaultId: this.vault.id,
+        Keeps: keeps
       });
     },
     editKeep(keep) {
-      this.$store.dispatch("updateKeepName", {
+      this.$store.dispatch("updateKeep", {
         Name: this.keepUpdate.name,
         KeepId: keep.id,
         Description: this.keepUpdate.description,
