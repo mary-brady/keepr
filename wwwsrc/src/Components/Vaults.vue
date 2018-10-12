@@ -49,7 +49,7 @@ export default {
       }
     },
     getVaultKeeps(vault) {
-      this.$store.dispatch("getVaultKeeps", vault.id);
+      this.$store.dispatch("getVaultKeeps", vault);
     }
   }
 };

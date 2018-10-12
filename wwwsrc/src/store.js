@@ -126,7 +126,7 @@ export default new Vuex.Store({
     },
     activeVault({ commit, dispatch }, vaultId) {
       commit('setActiveVault', vaultId)
-      dispatch('getVaultKeeps' + vaultId)
+      dispatch('getVaultKeeps', vaultId)
     },
     getVaultKeeps({ commit }, vaultId) {
       api.get('vaultkeeps/' + vaultId)
@@ -136,10 +136,9 @@ export default new Vuex.Store({
         })
     },
     addToVault({ dispatch }, keep) {
-      debugger;
       api.post('vaultkeeps', keep)
         .then(res => {
-          dispatch("getVaultKeeps", res.data)
+          dispatch("getVaultKeeps", res.data.id)
         })
     }
     // removeFromVault({ dispatch }, keep) {

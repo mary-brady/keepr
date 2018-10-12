@@ -58,8 +58,7 @@ export default {
       }
     },
     addToVault(keep) {
-      let keeps = keep.keeps;
-      keeps++;
+      keep.keeps++;
       this.$store.dispatch("addToVault", {
         KeepId: keep.id,
         VaultId: this.vault.id
