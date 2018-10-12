@@ -105,6 +105,34 @@ export default new Vuex.Store({
           dispatch('getKeeps')
         })
     },
+    updateKeepName({ dispatch }, keepData) {
+      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description })
+        .then(res => {
+          console.log(res)
+          dispatch('getKeeps')
+        })
+    },
+    updateKeepDesc({ dispatch }, keepData) {
+      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description })
+        .then(res => {
+          console.log(res)
+          dispatch('getKeeps')
+        })
+    },
+    updateKeepImg({ dispatch }, keepData) {
+      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description, Img: keepData.Img })
+        .then(res => {
+          console.log(res)
+          dispatch('getKeeps')
+        })
+    },
+    updateKeepPrivate({ dispatch }, keepData) {
+      api.put('keeps/' + keepData.KeepId, { Name: keepData.Name, Description: keepData.Description, IsPrivate: keepData.IsPrivate })
+        .then(res => {
+          console.log(res)
+          dispatch('getKeeps')
+        })
+    },
     //Vaults Stuff
     getVaults({ commit }) {
       api.get('vaults')
