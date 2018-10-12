@@ -115,7 +115,13 @@ export default new Vuex.Store({
         })
     },
 
-    updateKeepCounts({ commit, dispatch }, keep) {
+    updateKeepCounts({ dispatch }, keep) {
+      api.put('keeps', keep)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+    viewKeep({ dispatch }, keep) {
       api.put('keeps', keep)
         .then(res => {
           dispatch('getKeeps')

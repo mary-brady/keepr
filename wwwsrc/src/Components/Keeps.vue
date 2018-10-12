@@ -13,7 +13,7 @@
             <div class="card">
                 <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
-                  <span class="clickable" @click="showModal"><i
+                  <span class="clickable" @click="viewKeep(keep)"><i
                   class="fas fa-ellipsis-h"></i></span>
                 </h3>
 <!-- KEEP MODAL STUFF -->
@@ -33,7 +33,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -128,12 +127,6 @@ export default {
     closeModal() {
       this.editKeepModalVisible = false;
     },
-    seeKeep() {
-      this.seeKeepModal = true;
-    },
-    closeKeep() {
-      this.seeKeepModal = false;
-    },
     deleteKeep(keep) {
       if (keep.userId == this.user.id) {
         this.$store.dispatch("deleteKeep", keep);
@@ -146,6 +139,10 @@ export default {
         VaultId: this.vault.id
       });
       this.$store.dispatch("updateKeepCounts", keep);
+    },
+    viewKeep(keep) {
+      keep.views += 1;
+      this.$store.dispatch("viewKeep", keep);
     },
     editKeep(keep) {
       this.$store.dispatch("updateKeep", {
