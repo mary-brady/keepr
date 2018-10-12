@@ -47,7 +47,8 @@ export default {
   },
   methods: {
     removeKeep(keep) {
-      this.$store.dispatch("removeFromVault", keep);
+      let vaultId = this.$route.params.vaultId;
+      this.$store.dispatch("removeFromVault", { keep, vaultId });
     }
   }
 };

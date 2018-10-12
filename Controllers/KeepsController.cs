@@ -37,11 +37,9 @@ namespace keepr.Controllers
             throw new Exception("Invalid keep!");
         }
 
-        [HttpPut("{id}")]
-        public Keep Put(int id, [FromBody]Keep keep)
+        [HttpPut]
+        public Keep Put([FromBody]Keep keep)
         {
-            keep.UserId = HttpContext.User.Identity.Name;
-            keep.Id = id;
             return _repo.Update(keep);
         }
 

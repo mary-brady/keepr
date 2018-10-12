@@ -38,10 +38,12 @@ namespace keepr.Controllers
             return _repo.Update(vaultkeep);
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        //route /api/vaultkeeps/:vaultId/:keepId
+        [HttpDelete("{vaultId}/{keepId}")]
+        public void Delete(int vaultId, int keepId)
         {
-            _repo.Delete(id);
+            _repo.Delete(vaultId, keepId);
         }
     }
 }
