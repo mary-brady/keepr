@@ -1,11 +1,12 @@
 <template>
     <div id="dashboard" class="container-fluid">
-      <h1>Dashboard</h1>
-      <p>This is your dashbuuuurd</p>
+      <h4>What would you like to do?</h4>
+      <hr />
       <button class="btn btn-primary" @click="showKeepModal">Add Keep</button>
       <UploadModal v-show="isUploadModalVisible" @close="closeKeepModal"></UploadModal> |
       <button class="btn btn-primary" @click="showVaultModal">Add Vault</button>
-      <NewVaultModal v-show="isVaultModalVisible" @close="closeVaultModal"></NewVaultModal>
+      <NewVaultModal v-show="isVaultModalVisible" @close="closeVaultModal"></NewVaultModal> |
+      <router-link :to="{name: 'allkeeps'}"><button class="btn btn-primary">Peruse Keeps</button></router-link>
 
 
     </div>
@@ -13,12 +14,14 @@
 <script>
 import UploadModal from "@/Components/UploadModal.vue";
 import NewVaultModal from "@/Components/NewVaultModal.vue";
+import AllKeeps from "@/views/AllKeeps.vue";
 
 export default {
   name: "dashboard",
   components: {
     UploadModal,
-    NewVaultModal
+    NewVaultModal,
+    AllKeeps
   },
   data() {
     return {

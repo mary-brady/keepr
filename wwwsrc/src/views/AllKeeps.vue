@@ -1,22 +1,21 @@
 <template>
-<div class="keeps container-fluid">
+<div id="allkeeps">
     <div class="row">
       <div class="col-12">
       <hr />
-        <h1>Your Keeps</h1>
+        <h1>Look At All These Keeps</h1>
       <hr />
         </div>
     </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
-        <p v-if="!keep.userId == user.id">You don't have any keeps!</p>
             <div class="card">
                 <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
-                  <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
-                  <span class="clickable"><i
-                  class="far fa-edit"></i></span>
+                  <span class="clickable" @click="deleteKeep(keep)"><i v-if="!keep.userId == user.id" class="far fa-trash-alt"></i></span> |
+                  <span class="clickable" @click="viewKeep(keep)"><i
+                  class="fas fa-ellipsis-h"></i></span>
                 </h3>
-
+                
 <!-- KEEP MODAL STUFF -->
 <transition name="modal-fade" :id="'keep'+keep.id">
 <div class="modal fade" :id="'keep'+keep.id" tabindex="-1" role="dialog" aria-labelledby="keepModal" aria-hidden="true">
@@ -83,115 +82,29 @@
                 <button @click="addToVault(keep)">Add To Vault</button>
             </div>
             <div class="card-footer">
-              <i @click="viewKeep(keep)" class="far fa-eye clickable"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
+              <i class="far fa-eye"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
             </div>
             </div>
         </div>
             
         </div>
-    </div>
+</div>
+    
 </template>
 <script>
+import Keeps from "@/Components/Keeps.vue";
+import Vaults from "@/Components/Vaults.vue";
+
 export default {
-  name: "keeps",
-  data() {
-    return {
-      vault: {},
-      keepUpdate: {
-        name: "",
-        description: "",
-        img: "",
-        isPrivate: false
-      },
-      editKeepModalVisible: false,
-      seeKeepModal: false
-    };
+  name: "allkeeps",
+  components: {
+    Keeps,
+    Vaults
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-  },
-  computed: {
-    keeps() {
-      return this.$store.state.keeps;
-    },
-    user() {
-      return this.$store.state.user;
-    },
-    vaults() {
-      return this.$store.state.vaults;
-    }
-  },
-  methods: {
-    showEditModal() {
-      this.editKeepModalVisible = true;
-    },
-    closeEditModal() {
-      this.editKeepModalVisible = false;
-    },
-    deleteKeep(keep) {
-      if (keep.userId == this.user.id) {
-        this.$store.dispatch("deleteKeep", keep);
-      }
-    },
-    addToVault(keep) {
-      keep.keeps += 1;
-      this.$store.dispatch("addToVault", {
-        KeepId: keep.id,
-        VaultId: this.vault.id
-      });
-      this.$store.dispatch("updateKeepCounts", keep);
-    },
-    viewKeep(keep) {
-      keep.views += 1;
-      this.$store.dispatch("viewKeep", keep);
-    },
-    editKeep(keep) {
-      this.$store.dispatch("updateKeep", {
-        Name: this.keepUpdate.name,
-        KeepId: keep.id,
-        Description: this.keepUpdate.description,
-        isPrivate: this.keepUpdate.isPrivate,
-        Img: this.keepUpdate.img
-      });
-      this.keepUpdate = {
-        name: "",
-        description: "",
-        img: "",
-        isPrivate: false
-      };
-      this.keepUpdate.name = "";
-    }
   }
 };
 </script>
 <style scoped>
-.clickable:hover {
-  cursor: pointer;
-}
-i {
-  color: #555;
-  font-size: small;
-}
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.icon {
-  color: #555;
-}
-p {
-  color: #158cba;
-  font-size: small;
-}
-img {
-  max-width: 200px;
-  max-height: 200px;
-}
 </style>

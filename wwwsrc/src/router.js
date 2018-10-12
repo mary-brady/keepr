@@ -7,6 +7,9 @@ import Login from './views/Login.vue'
 // @ts-ignore
 import VaultKeep from './views/VaultKeep.vue';
 
+// @ts-ignore
+import AllKeeps from './views/AllKeeps.vue';
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +28,12 @@ export default new Router({
       path: '/vaultkeep/:vaultId',
       name: 'vaultkeep',
       component: VaultKeep,
+      props: true
+    },
+    {
+      path: '/allkeeps',
+      name: 'allkeeps',
+      component: AllKeeps,
       props: true
     }
   ]
