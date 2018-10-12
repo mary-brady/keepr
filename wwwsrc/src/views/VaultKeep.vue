@@ -2,7 +2,9 @@
     <div class="vaultkeep container-fluid">
         <div class="row">
             <div class="col-12">
-            <h1>{{activeVault.name}}!!!!!</h1>
+                <hr />
+            <h1>{{activeVault.name}}</h1>
+                <hr />
             </div>
         </div>
         <div class="row">
