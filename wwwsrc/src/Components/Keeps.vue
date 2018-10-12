@@ -15,8 +15,8 @@
             <div class="card-body">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
-                <select class="custom-select">
-                  <option v-for="vault in vaults" :key="vault.id" :value="vaultId">{{vault.title}}</option>
+                <select class="custom-select" v-model="vault">
+                  <option v-for="vault in vaults" :key="vault.id" :value="vault">{{vault.name}}</option>
                   </select>
                 <button @click="addToVault(keep)">Add To Vault</button>
             </div>
@@ -34,12 +34,11 @@ export default {
   name: "keeps",
   data() {
     return {
-      vaultId: {}
+      vault: {}
     };
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getVaults");
   },
   computed: {
     keeps() {
@@ -59,8 +58,12 @@ export default {
       }
     },
     addToVault(keep) {
-      this.vaultId.id = VaultId;
-      this.$store.dispatch("addToVault", { vaultId, keep });
+      let keeps = keep.keeps;
+      keeps++;
+      this.$store.dispatch("addToVault", {
+        KeepId: keep.id,
+        VaultId: this.vault.id
+      });
     }
   }
 };

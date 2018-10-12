@@ -28,7 +28,7 @@ namespace keepr.Repositories
             return vaultkeep;
         }
 
-        //GET ALL VAULTSs
+        //GET ALL VAULTS
         public IEnumerable<Keep> GetAll(int vaultId)
         {
             return _db.Query<Keep>(@"

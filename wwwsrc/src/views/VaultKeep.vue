@@ -16,7 +16,7 @@
             <div class="col-md-4" v-for="keep in keepList" :key="keep.id">
                  <p v-if="keep.length = 0">You don't have anything in here!</p>
             <div class="card">
-                <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
+                <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="removeKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
             <div class="card-body">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
@@ -43,6 +43,11 @@ export default {
     },
     activeVault() {
       return this.$store.state.activeVault;
+    }
+  },
+  methods: {
+    removeKeep(keep) {
+      this.$store.dispatch("removeFromVault", keep);
     }
   }
 };
