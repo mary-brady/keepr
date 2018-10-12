@@ -12,14 +12,44 @@
         <p v-if="!keep.userId == user.id">You don't have any keeps!</p>
             <div class="card">
                 <h3 class="card-header">{{keep.name}} 
-                  <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> | 
-                  <span class="clickable" @click="nameFormVisible = !nameFormVisible"><i
-                  class="fa fa-edit"></i></span>
+                  <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
+                  <span class="clickable" @click="showModal"><i
+                  class="fas fa-ellipsis-h"></i></span>
                 </h3>
-      <form v-if="nameFormVisible" @submit.prevent="updateKeepName(keep)" class="form-inline">
-        <input type="text" name="name" v-model="keepUpdate.name" placeholder="New Keep Name" />
-        <button class="btn btn-primary btn-sm">Submit</button>
-      </form>
+
+<!-- MODAL STUFF -->
+<div v-show="editKeepModalVisible">
+<transition name="modal-fade">
+  <div class="modal-backdrop">
+    <div class="modal">
+    <header class="modal-header">
+        <slot class="header">
+            <h2>Edit Keep</h2> &nbsp; &nbsp;
+            <span class="clickable"><i class="fas fa-times icon" @click="closeModal"></i></span>
+        </slot>
+        </header>
+        <div class="modal-body">
+        <slot class="body">
+            <div class="mw">
+             <form @submit.prevent="editKeep">
+                <div class="form-group">
+                <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.name" placeholder="New Name?"/>
+                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.description" placeholder="Describe it!"/>
+                   <br>
+                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.isPrivate" placeholder="Describe it!"/>
+                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.img" placeholder="Image URL?"/>
+                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="keepUpdate(keep)">Save Changes</button>
+               </div>
+            </form>
+            </div>
+        </slot>
+        </div>
+    </div>
+</div>
+</transition>
+</div>
+<!-- MODAL STUFF -->
+
             <div class="card-body">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
@@ -47,12 +77,9 @@ export default {
         name: "",
         description: "",
         img: "",
-        isPrivate: boolean
+        isPrivate: false
       },
-      nameFormVisible: false,
-      descFormVisible: false,
-      imgFormVisible: false,
-      isPrivate: false
+      editKeepModalVisible: false
     };
   },
   mounted() {
@@ -70,6 +97,12 @@ export default {
     }
   },
   methods: {
+    showModal() {
+      this.editKeepModalVisible = true;
+    },
+    closeModal() {
+      this.editKeepModalVisible = false;
+    },
     deleteKeep(keep) {
       if (keep.userId == this.user.id) {
         this.$store.dispatch("deleteKeep", keep);
@@ -82,42 +115,20 @@ export default {
         VaultId: this.vault.id
       });
     },
-    updateKeepName(keep) {
+    editKeep(keep) {
       this.$store.dispatch("updateKeepName", {
         Name: this.keepUpdate.name,
         KeepId: keep.id,
-        Description: keep.description
+        Description: this.keepUpdate.description,
+        isPrivate: this.keepUpdate.isPrivate,
+        Img: this.keepUpdate.img
       });
-      this.nameFormVisible = false;
-      this.keepUpdate.name = "";
-    },
-    updateKeepDesc(keep) {
-      this.$store.dispatch("updateKeepDesc", {
-        Name: this.keepUpdate.name,
-        KeepId: keep.id,
-        Description: keep.description
-      });
-      this.nameFormVisible = false;
-      this.keepUpdate.name = "";
-    },
-    updateKeepImg(keep) {
-      this.$store.dispatch("updateKeepImg", {
-        Name: this.keepUpdate.name,
-        KeepId: keep.id,
-        Description: keep.description,
-        Img: keep.img
-      });
-      this.nameFormVisible = false;
-      this.keepUpdate.name = "";
-    },
-    updateKeepPrivate(keep) {
-      this.$store.dispatch("updateKeepPrivate", {
-        Name: this.keepUpdate.name,
-        KeepId: keep.id,
-        Description: keep.description,
-        IsPrivate: keep.isPrivate
-      });
-      this.nameFormVisible = false;
+      this.keepUpdate = {
+        name: "",
+        description: "",
+        img: "",
+        isPrivate: false
+      };
       this.keepUpdate.name = "";
     }
   }
@@ -129,6 +140,64 @@ export default {
 }
 i {
   color: #555;
+  font-size: small;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  position: relative;
+  background: #f6f6f6;
+  box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+.modal-header,
+.modal-footer {
+  padding: 15px;
+  display: flex;
+  padding-bottom: 2px;
+}
+.modal-header {
+  border-bottom: 1px solid #158cba;
+  color: #158cba;
+}
+.header {
+  justify-content: center;
+}
+.modal-footer {
+  border-top: 1px solid #158cba;
+  justify-content: flex-end;
+}
+.modal-body {
+  position: relative;
+  padding: 20px 10px;
+}
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+.clickable:hover {
+  cursor: pointer;
+}
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.icon {
+  color: #555;
+}
+p {
+  color: #158cba;
   font-size: small;
 }
 </style>
