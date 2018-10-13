@@ -21,7 +21,7 @@
                  <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
                  <div class="icons"> 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
-                  <span class="clickable" @click="showEditModal"><i
+                  <span class="clickable" data-toggle="modal" :data-target="'#editKeep'+keep.id"><i
                   class="far fa-edit"></i></span>
                   </div>
                   </div>
@@ -51,36 +51,42 @@
 <!-- KEEP MODAL STUFF -->
 
 <!-- EDIT MODAL STUFF -->
-<div v-show="editKeepModalVisible">
-<transition name="modal-fade">
-  <div class="modal-backdrop">
-    <div class="modal">
-    <header class="modal-header">
-        <slot class="header">
-            <h2>Edit Keep</h2> &nbsp; &nbsp;
-            <span class="clickable"><i class="fas fa-times icon" @click="closeEditModal"></i></span>
-        </slot>
-        </header>
-        <div class="modal-body">
-        <slot class="body">
-            <div class="mw">
-             <form @submit.prevent="editKeep(keep)">
-                <div class="form-group">
-                <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.name" placeholder="Keep Name"/>
-                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.description" placeholder="Describe it!"/>
-                   <br>
-                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.isPrivate" placeholder="Describe it!"/>
-                  <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.img" placeholder="Image URL?"/>
-                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="closeEditModal">Save Changes</button>
-               </div>
-            </form>
-            </div>
-        </slot>
-        </div>
+<transition name="modal-fade" :id="'editKeep'+keep.id">
+<div class="modal fade" :id="'editKeep'+keep.id" tabindex="-1" role="dialog" aria-labelledby="editKeepModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editKeepModal">Edit {{keep.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" :value="keepUpdate.name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" :value="keepUpdate.isPrivate = true">
+              Keep Private?
+            </label>
+      </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
     </div>
+  </div>
 </div>
 </transition>
-</div>
 <!-- EDIT MODAL STUFF -->
 
             <div class="card-body">
