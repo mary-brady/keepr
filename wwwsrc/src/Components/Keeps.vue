@@ -13,7 +13,7 @@
             <div class="card">
                 <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
-                  <span class="clickable"><i
+                  <span class="clickable" @click="showEditModal"><i
                   class="far fa-edit"></i></span>
                 </h3>
 
@@ -49,7 +49,7 @@
     <header class="modal-header">
         <slot class="header">
             <h2>Edit Keep</h2> &nbsp; &nbsp;
-            <span class="clickable"><i class="fas fa-times icon" @click="closeModal"></i></span>
+            <span class="clickable"><i class="fas fa-times icon" @click="closeEditModal"></i></span>
         </slot>
         </header>
         <div class="modal-body">
@@ -62,7 +62,7 @@
                    <br>
                   <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.isPrivate" placeholder="Describe it!"/>
                   <input type="text" class="form-control mt-1 mb-1" v-model="keepUpdate.img" placeholder="Image URL?"/>
-                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="closeModal">Save Changes</button>
+                  <button class="btn btn-primary mt-1 mb-1 btn-sm" type="submit" @click="closeEditModal">Save Changes</button>
                </div>
             </form>
             </div>

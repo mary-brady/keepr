@@ -14,14 +14,12 @@
 <script>
 import UploadModal from "@/Components/UploadModal.vue";
 import NewVaultModal from "@/Components/NewVaultModal.vue";
-import AllKeeps from "@/views/AllKeeps.vue";
 
 export default {
   name: "dashboard",
   components: {
     UploadModal,
-    NewVaultModal,
-    AllKeeps
+    NewVaultModal
   },
   data() {
     return {
