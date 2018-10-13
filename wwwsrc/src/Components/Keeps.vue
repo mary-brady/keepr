@@ -7,14 +7,16 @@
       <hr />
         </div>
     </div>
-          <div class="row">
-            <div class="col-12">
-        <p>You don't have any keeps! :(</p>
-        </div>
-        </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
-            <div class="card">
+          <div class="user-check" v-if="keep.userId != user.id">
+            <!-- <div class="row">
+              <div class="col-12">
+                <p>You don't have any keeps! :(</p>
+              </div>
+            </div> -->
+          </div>
+            <div v-else class="card">
                 <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
                   <span class="clickable" @click="showEditModal"><i
@@ -79,8 +81,8 @@
 <!-- EDIT MODAL STUFF -->
 
             <div class="card-body">
-                <p>{{keep.description}}</p>
-                <p>Private? {{keep.isPrivate}}</p>
+                <p class="keep-text">{{keep.description}}</p>
+                <p class="keep-text">Private? {{keep.isPrivate}}</p>
                 <select class="custom-select" v-model="vault">
                   <option v-for="vault in vaults" :key="vault.id" :value="vault">{{vault.name}}</option>
                   </select>
@@ -113,6 +115,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
+    console.log("keeps user: ", this.user);
   },
   computed: {
     keeps() {
@@ -120,6 +123,7 @@ export default {
     },
     user() {
       return this.$store.state.user;
+      console.log("keeps user: ", user);
     },
     vaults() {
       return this.$store.state.vaults;

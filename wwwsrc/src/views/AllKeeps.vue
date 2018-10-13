@@ -38,13 +38,16 @@
 </div>
 </transition>
 <!-- KEEP MODAL STUFF -->
+
            <div class="card-body">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
                 <select class="custom-select" v-model="vault">
-                  <option v-for="vault in vaults" :key="vault.id" :value="vault">{{vault.name}}</option>
+                  <option v-for="vault in vaults" :key="vault.id" :value="vault" v-if="vault.userId == user.id">
+                    {{vault.name}}
+                  </option>
                   </select>
-                <button>Add To Vault</button>
+                <button @click="addToVault(keep)">Add To Vault</button>
             </div>
             <div class="card-footer">
               <i class="far fa-eye"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
@@ -64,9 +67,15 @@ export default {
     Keeps,
     Vaults
   },
+  data() {
+    return {
+      vault: {}
+    };
+  },
   mounted() {
     this.$store.dispatch("getKeeps");
     this.$store.dispatch("getVaults");
+    console.log("AK vaults:", this.vaults);
   },
   computed: {
     keeps() {
@@ -76,9 +85,7 @@ export default {
       return this.$store.state.vaults;
     },
     user() {
-      if (vaults.userId == user.id) {
-        return this.$store.state.vaults;
-      }
+      return this.$store.state.vaults;
     }
   }
 };

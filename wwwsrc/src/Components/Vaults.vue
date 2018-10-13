@@ -9,8 +9,9 @@
         </div>
         <div class="row">
       <div v-for="vault in vaults" :key="vault.id" class="col-md-4">
-        <p v-if="!vault.userId == user.id">You don't have any vaults!<p>
-        <div class="card">
+          <div class="user-check" v-if="vault.userId != user.id">
+            </div>
+        <div v-else class="card">
           <div class="card-header">
             <h4><router-link :to="{name: 'vaultkeep', params: {vaultId: vault.id}}">{{vault.name}}</router-link> | <span class="clickable" @click="deleteVault(vault)"><i class="far fa-trash-alt"></i></span></h4>
           </div>
