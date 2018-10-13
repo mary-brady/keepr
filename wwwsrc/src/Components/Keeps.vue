@@ -17,12 +17,15 @@
             </div> -->
           </div>
             <div v-else class="card">
-                <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
+              <div class="card-header">
+                 <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
+                 <div class="icons"> 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
                   <span class="clickable" @click="showEditModal"><i
-                  class="far fa-edit"></i></span></h3>
+                  class="far fa-edit"></i></span>
+                  </div>
+                  </div>
                 
-
 <!-- KEEP MODAL STUFF -->
 <transition name="modal-fade" :id="'keep'+keep.id">
 <div class="modal fade" :id="'keep'+keep.id" tabindex="-1" role="dialog" aria-labelledby="keepModal" aria-hidden="true">
@@ -148,8 +151,10 @@ export default {
       this.$store.dispatch("updateKeepCounts", keep);
     },
     viewKeep(keep) {
-      keep.views += 1;
-      this.$store.dispatch("viewKeep", keep);
+      if (keep.userId != this.user.Id) {
+        keep.views += 1;
+        this.$store.dispatch("viewKeep", keep);
+      }
     },
     editKeep(keep) {
       this.$store.dispatch("updateKeep", {

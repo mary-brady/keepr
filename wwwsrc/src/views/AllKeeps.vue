@@ -9,11 +9,15 @@
     </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
-            <div class="card">
-                    <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}}
+            <div class="card" style="width: 18rem;">
+              <div class="card-header">
+                    <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
+                    <div v-if="keep.userId == user.id" class="icons">
                   <span class="clickable"><i class="far fa-trash-alt"></i></span> |
-                  <span class="clickable"><i
-                  class="far fa-edit"></i></span></h3>
+                  <span v-if="keep.userId == user.id" class="clickable"><i
+                  class="far fa-edit"></i></span>
+                  </div>
+                  </div>
 
 <!-- KEEP MODAL STUFF -->
 <transition name="modal-fade" :id="'keep'+keep.id">
@@ -43,8 +47,10 @@
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
                 <select class="custom-select" v-model="vault">
-                  <option v-for="vault in vaults" :key="vault.id" :value="vault" v-if="vault.userId == user.id">
+                  <option v-for="vault in vaults" :key="vault.id" :value="vault">
+                    <template v-if="vault.userId === user.id">
                     {{vault.name}}
+                    </template>
                   </option>
                   </select>
                 <button @click="addToVault(keep)">Add To Vault</button>
@@ -69,26 +75,61 @@ export default {
   },
   data() {
     return {
-      vault: {}
+      vault: {},
+      keepUpdate: {
+        name: "",
+        description: "",
+        img: "",
+        isPrivate: false
+      }
     };
   },
   mounted() {
     this.$store.dispatch("getKeeps");
     this.$store.dispatch("getVaults");
     console.log("AK vaults:", this.vaults);
+    console.log("AK user", this.user);
   },
   computed: {
+    user() {
+      return this.$store.state.user;
+    },
     keeps() {
       return this.$store.state.keeps;
     },
     vaults() {
       return this.$store.state.vaults;
+    }
+  },
+  methods: {
+    editKeep(keep) {
+      this.$store.dispatch("updateKeep", {
+        Name: this.keepUpdate.name,
+        KeepId: keep.id,
+        Description: this.keepUpdate.description,
+        isPrivate: this.keepUpdate.isPrivate,
+        Img: this.keepUpdate.img
+      });
+      this.keepUpdate = {
+        name: "",
+        description: "",
+        img: "",
+        isPrivate: false
+      };
+      this.keepUpdate.name = "";
     },
-    user() {
-      return this.$store.state.vaults;
+    viewKeep(keep) {
+      if (keep.userId != this.user.id) {
+        keep.views += 1;
+        this.$store.dispatch("viewKeep", keep);
+      }
     }
   }
 };
 </script>
 <style scoped>
+i {
+  color: #555;
+  font-size: x-small;
+}
 </style>
