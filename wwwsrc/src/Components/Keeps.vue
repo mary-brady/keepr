@@ -7,15 +7,19 @@
       <hr />
         </div>
     </div>
+          <div class="row">
+            <div class="col-12">
+        <p>You don't have any keeps! :(</p>
+        </div>
+        </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
-        <p v-if="!keep.userId == user.id">You don't have any keeps!</p>
             <div class="card">
                 <h3 class="card-header" data-toggle="modal" :data-target="'#keep'+keep.id">{{keep.name}} 
                   <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt"></i></span> |
                   <span class="clickable" @click="showEditModal"><i
-                  class="far fa-edit"></i></span>
-                </h3>
+                  class="far fa-edit"></i></span></h3>
+                
 
 <!-- KEEP MODAL STUFF -->
 <transition name="modal-fade" :id="'keep'+keep.id">
@@ -129,9 +133,7 @@ export default {
       this.editKeepModalVisible = false;
     },
     deleteKeep(keep) {
-      if (keep.userId == this.user.id) {
-        this.$store.dispatch("deleteKeep", keep);
-      }
+      this.$store.dispatch("deleteKeep", keep);
     },
     addToVault(keep) {
       keep.keeps += 1;
@@ -185,10 +187,6 @@ i {
 }
 .icon {
   color: #555;
-}
-p {
-  color: #158cba;
-  font-size: small;
 }
 img {
   max-width: 200px;
