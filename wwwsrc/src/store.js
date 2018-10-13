@@ -23,8 +23,7 @@ export default new Vuex.Store({
     keeps: [],
     vaults: [],
     activeVault: {},
-    vaultKeeps: [],
-    activeKeep: {}
+    vaultKeeps: []
 
   },
   mutations: {
@@ -97,6 +96,7 @@ export default new Vuex.Store({
         })
     },
     addKeep({ dispatch }, keepData) {
+      debugger
       api.post('keeps', keepData.keepData)
         .then(keeps => {
           dispatch("getKeeps")
@@ -110,7 +110,7 @@ export default new Vuex.Store({
     },
     updateKeep({ dispatch }, keepData) {
       debugger
-      api.put('keeps', { Name: keepData.Name, Description: keepData.Description, Img: keepData.img, isPrivate: keepData.isPrivate, Keeps: keepData.keeps })
+      api.put('keeps', keepData)
         .then(res => {
           console.log(res)
           dispatch('getKeeps')
@@ -146,6 +146,13 @@ export default new Vuex.Store({
       api.delete('vaults/' + vaultData.id)
         .then(res => {
           dispatch('getVaults')
+        })
+    },
+    editVault({ dispatch }, vaultData) {
+      debugger;
+      api.put('vaults', vaultData)
+        .then(res => {
+          dispatch("getVaults")
         })
     },
     activeVault({ commit, dispatch }, vaultId) {

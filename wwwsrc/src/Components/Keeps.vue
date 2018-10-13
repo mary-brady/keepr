@@ -10,11 +10,6 @@
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
           <div class="user-check" v-if="keep.userId != user.id">
-            <!-- <div class="row">
-              <div class="col-12">
-                <p>You don't have any keeps! :(</p>
-              </div>
-            </div> -->
           </div>
             <div v-else class="card">
               <div class="card-header">
@@ -65,15 +60,15 @@
         <form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" :value="keepUpdate.name">
+            <input type="text" class="form-control" v-model="keepUpdate.name">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Description:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <textarea class="form-control" v-model="keepUpdate.description"></textarea>
           </div>
           <div class="form-check">
             <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" :value="keepUpdate.isPrivate = true">
+            <input class="form-check-input" type="checkbox" :checked="keepUpdate.isPrivate">
               Keep Private?
             </label>
       </div>
@@ -81,7 +76,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" @click="editKeep(keep)" data-dismiss="modal">Save</button>
       </div>
     </div>
   </div>
@@ -101,8 +96,7 @@
               <i @click="viewKeep(keep)" class="far fa-eye clickable"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
             </div>
             </div>
-        </div>
-            
+        </div>    
         </div>
     </div>
 </template>
@@ -117,9 +111,7 @@ export default {
         description: "",
         img: "",
         isPrivate: false
-      },
-      editKeepModalVisible: false,
-      seeKeepModal: false
+      }
     };
   },
   mounted() {
@@ -139,12 +131,6 @@ export default {
     }
   },
   methods: {
-    showEditModal() {
-      this.editKeepModalVisible = true;
-    },
-    closeEditModal() {
-      this.editKeepModalVisible = false;
-    },
     deleteKeep(keep) {
       this.$store.dispatch("deleteKeep", keep);
     },
@@ -164,11 +150,12 @@ export default {
     },
     editKeep(keep) {
       this.$store.dispatch("updateKeep", {
-        Name: this.keepUpdate.name,
-        KeepId: keep.id,
-        Description: this.keepUpdate.description,
+        name: this.keepUpdate.name,
+        id: keep.id,
+        description: this.keepUpdate.description,
         isPrivate: this.keepUpdate.isPrivate,
-        Img: this.keepUpdate.img
+        img: this.keepUpdate.img,
+        userId: this.user.id
       });
       this.keepUpdate = {
         name: "",
@@ -176,7 +163,6 @@ export default {
         img: "",
         isPrivate: false
       };
-      this.keepUpdate.name = "";
     }
   }
 };

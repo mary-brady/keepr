@@ -40,6 +40,7 @@ namespace keepr.Controllers
         [HttpPut]
         public Keep Put([FromBody]Keep keep)
         {
+            keep.UserId = HttpContext.User.Identity.Name;
             return _repo.Update(keep);
         }
 
