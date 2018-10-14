@@ -8,8 +8,8 @@
         </div>
     </div>
     <div class="row">
-        <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
-            <div class="card" style="width: 18rem;">
+        <div v-for="keep in keeps" :key="keep.id" class="col-md-4" v-if="!keep.isPrivate">
+            <div class="card mb-2" style="width: 18rem;">
               <div class="card-header">
                     <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
                     <div v-if="keep.userId == user.id" class="icons">
@@ -123,6 +123,14 @@ export default {
         keep.views += 1;
         this.$store.dispatch("viewKeep", keep);
       }
+    },
+    addToVault(keep) {
+      keep.keeps += 1;
+      this.$store.dispatch("addToVault", {
+        KeepId: keep.id,
+        VaultId: this.vault.id
+      });
+      this.$store.dispatch("updateKeepCounts", keep);
     }
   }
 };
