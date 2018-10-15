@@ -9,13 +9,14 @@
     </div>
     <div class="row">
         <div v-for="keep in keeps" :key="keep.id" class="col-md-4" v-if="!keep.isPrivate">
+          <div class="holder">
             <div class="card mb-2" style="width: 18rem;">
               <div class="card-header">
                     <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
-                    <div v-if="keep.userId == user.id" class="icons">
-                  <span class="clickable"><i class="far fa-trash-alt"></i></span> |
+                    <div v-if="keep.userId == user.id">
+                  <span class="clickable"><i class="far fa-trash-alt icons"></i></span> |
                   <span v-if="keep.userId == user.id" class="clickable"><i
-                  class="far fa-edit"></i></span>
+                  class="far fa-edit icons"></i></span>
                   </div>
                   </div>
 
@@ -42,7 +43,7 @@
 </div>
 </transition>
 <!-- KEEP MODAL STUFF -->
-
+          <img v-if="keep.img.length > 0" style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image" class="image">
            <div class="card-body">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
@@ -55,8 +56,11 @@
                   </select>
                 <button @click="addToVault(keep)">Add To Vault</button>
             </div>
+            <div class="overlay">
             <div class="card-footer">
               <i class="far fa-eye"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
+            </div>
+            </div>
             </div>
             </div>
         </div>
@@ -136,8 +140,35 @@ export default {
 };
 </script>
 <style scoped>
-i {
+.icons {
   color: #555;
   font-size: x-small;
+}
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.holder:hover .overlay {
+  opacity: 1;
+}
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.holder {
+  position: relative;
+  width: 50%;
+  max-width: 300px;
 }
 </style>

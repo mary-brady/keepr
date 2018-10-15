@@ -9,14 +9,17 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <router-link to="/login">Login</router-link>
-      </li>
+      </li>&nbsp;&nbsp;
       <li class="nav-item">
         <button class="btn btn-secondary" @click="showModal">Login</button>
         <LoginModal v-show="isModalVisible" @close="closeModal"></LoginModal>
-      </li>
+      </li>&nbsp;&nbsp;
       <li class="nav-item">
-      </li> &nbsp;&nbsp;
+      <router-link :to="{name: 'allkeeps'}"><button class="btn btn-secondary">Peruse Keeps</button></router-link>
+      </li>&nbsp;&nbsp;
+      <li class="nav-item">
     <span class="clickable" @click="logout()"><i class="fas fa-sign-out-alt"></i></span>
+      </li>
     </ul>
   </div>
 </nav>
@@ -26,10 +29,12 @@
 
 <script>
 import LoginModal from "@/Components/LoginModal.vue";
+import AllKeeps from "@/views/AllKeeps.vue";
 
 export default {
   components: {
-    LoginModal
+    LoginModal,
+    AllKeeps
   },
   data() {
     return {
@@ -49,7 +54,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 #app {

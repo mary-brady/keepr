@@ -34,7 +34,7 @@
       </div>
       <div class="modal-body">
         <p>{{keep.description}}</p>
-        <img :src="keep.img"/>
+            <img style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -87,7 +87,7 @@
 </div>
 </transition>
 <!-- EDIT MODAL STUFF -->
-
+            <img style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image">
             <div class="card-body">
                 <p class="keep-text">{{keep.description}}</p>
                 <p class="keep-text">Private? {{keep.isPrivate}}</p>
@@ -192,9 +192,5 @@ i {
 }
 .icon {
   color: #555;
-}
-img {
-  max-width: 200px;
-  max-height: 200px;
 }
 </style>
