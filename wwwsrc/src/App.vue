@@ -7,9 +7,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <router-link to="/login">Login</router-link>
-      </li>&nbsp;&nbsp;
+      </li>&nbsp;&nbsp; -->
       <li class="nav-item">
         <button class="btn btn-secondary" @click="showModal">Login</button>
         <LoginModal v-show="isModalVisible" @close="closeModal"></LoginModal>
