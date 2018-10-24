@@ -18,8 +18,12 @@
             <div class="card">
                 <h3 class="card-header">{{keep.name}} | <span class="clickable" @click="removeKeep(keep)"><i class="far fa-trash-alt"></i></span></h3>
             <div class="card-body">
+            <img style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image">
                 <p>{{keep.description}}</p>
                 <p>Private? {{keep.isPrivate}}</p>
+            </div>
+            <div class="card-footer">
+              <i class="far fa-eye"></i> {{keep.views}} | <i class="far fa-save"></i> {{keep.keeps}} | <i class="fas fa-share"></i> {{keep.shares}}
             </div>
             </div>
                     </div>

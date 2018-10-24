@@ -14,11 +14,9 @@
               <div class="card-header">
                     <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
                     <div v-if="keep.userId == user.id">
-                  <span class="clickable"><i class="far fa-trash-alt icons"></i></span> |
-                  <span v-if="keep.userId == user.id" class="clickable"><i
-                  class="far fa-edit icons"></i></span>
+                  <span class="clickable" @click="deleteKeep(keep)"><i class="far fa-trash-alt icons"></i></span>
                   </div>
-                  </div>
+              </div>
 
 <!-- KEEP MODAL STUFF -->
 <transition name="modal-fade" :id="'keep'+keep.id">
@@ -33,7 +31,7 @@
       </div>
       <div class="modal-body">
         <p>{{keep.description}}</p>
-        <img :src="keep.img"/>
+        <img v-if="keep.img.length > 0" :src="keep.img" alt="Card image" class="image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -43,10 +41,9 @@
 </div>
 </transition>
 <!-- KEEP MODAL STUFF -->
-          <img v-if="keep.img.length > 0" style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image" class="image">
+          <img v-if="keep.img.length > 0" :src="keep.img" alt="Card image" class="image">
            <div class="card-body">
                 <p>{{keep.description}}</p>
-                <p>Private? {{keep.isPrivate}}</p>
                 <select class="custom-select" v-model="vault">
                   <option v-for="vault in vaults" :key="vault.id" :value="vault">
                     <template v-if="vault.userId === user.id">
@@ -54,7 +51,7 @@
                     </template>
                   </option>
                   </select>
-                <button @click="addToVault(keep)">Add To Vault</button>
+                <button @click="addToVault(keep)" class="mt-2">Add To Vault</button>
             </div>
             <div class="overlay">
             <div class="card-footer">
@@ -135,6 +132,9 @@ export default {
         VaultId: this.vault.id
       });
       this.$store.dispatch("updateKeepCounts", keep);
+    },
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
     }
   }
 };
@@ -170,5 +170,9 @@ export default {
   position: relative;
   width: 50%;
   max-width: 300px;
+}
+img {
+  height: 100%;
+  width: 100%;
 }
 </style>

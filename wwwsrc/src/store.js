@@ -99,7 +99,6 @@ export default new Vuex.Store({
         })
     },
     addKeep({ dispatch }, keepData) {
-      debugger
       api.post('keeps', keepData.keepData)
         .then(keeps => {
           dispatch("getKeeps")

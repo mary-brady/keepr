@@ -18,6 +18,9 @@
       <router-link :to="{name: 'allkeeps'}"><button class="btn btn-secondary">Peruse Keeps</button></router-link>
       </li>&nbsp;&nbsp;
       <li class="nav-item">
+        <router-link to="/#"><button class="btn btn-secondary">Dashboard</button></router-link>
+      </li>&nbsp;&nbsp;
+      <li class="nav-item">
     <span class="clickable" @click="logout()"><i class="fas fa-sign-out-alt"></i></span>
       </li>
     </ul>
@@ -30,11 +33,13 @@
 <script>
 import LoginModal from "@/Components/LoginModal.vue";
 import AllKeeps from "@/views/AllKeeps.vue";
+import Home from "@/views/Home.vue";
 
 export default {
   components: {
     LoginModal,
-    AllKeeps
+    AllKeeps,
+    Home
   },
   data() {
     return {

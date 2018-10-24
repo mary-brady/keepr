@@ -15,6 +15,7 @@
                 <div class="form-group">
                 <input type="text" class="form-control mt-1 mb-1" v-model="newKeep.name" placeholder="Name it!"/>
                   <input type="text" class="form-control mt-1 mb-1" v-model="newKeep.description" placeholder="Describe it!"/>
+                  <input type="text" class="form-control mt-1 mb-1" v-model="newKeep.img" placeholder="Image Url"/>
                   <label class="form-check-label">
                   <input type="checkbox" class="form-check-input">
                    Keep it private?

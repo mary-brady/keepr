@@ -8,10 +8,10 @@
         </div>
     </div>
     <div class="row">
-        <div v-for="keep in keeps" :key="keep.id" class="col-md-4">
+        <div v-for="keep in keeps" :key="keep.id" class="col-md-3">
           <div class="user-check" v-if="keep.userId != user.id">
           </div>
-            <div v-else class="card">
+            <div v-else class="card mb-2">
               <div class="card-header">
                  <h4 data-toggle="modal" :data-target="'#keep'+keep.id" @click="viewKeep(keep)">{{keep.name}}</h4>
                  <div class="icons"> 
@@ -34,7 +34,7 @@
       </div>
       <div class="modal-body">
         <p>{{keep.description}}</p>
-            <img style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image">
+            <img class="img-modal" :src="keep.img" alt="Card image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -87,7 +87,7 @@
 </div>
 </transition>
 <!-- EDIT MODAL STUFF -->
-            <img style="height: 200px; width: 100%; display: block;" :src="keep.img" alt="Card image">
+            <img style="height: 250px; width: 100%; display: block;" :src="keep.img" alt="Card image">
             <div class="card-body">
                 <p class="keep-text">{{keep.description}}</p>
                 <p class="keep-text">Private? {{keep.isPrivate}}</p>
@@ -192,5 +192,9 @@ i {
 }
 .icon {
   color: #555;
+}
+.img-modal {
+  height: 100%;
+  width: 100%;
 }
 </style>
